@@ -1,7 +1,8 @@
+// how 
 // Global app controller
-//859f648b6965be897c32f469cd4831bf 
 //https://www.food2fork.com/api/search
 import Search from './models/Search';
+import Recipe from './models/Recipe'
 import * as SearchView from './views/SearchView';
 import { elements,renderLoader,clearLoader } from './views/base';
 
@@ -28,6 +29,7 @@ const controlSearch = async () =>{
         
         clearLoader();
         //pass value to search view to display on screen
+        // will work for first page for next see below
         SearchView.renderResults(state.search.results);
     }
     
@@ -40,4 +42,25 @@ elements.searchInput.addEventListener('submit',e=>{
     
 });
 
+// function for pagination button "searchResPage" is class of parent element
+elements.searchResPage.addEventListener('click', e =>{
+    const btn = e.target.closest('.btn-inline');
+    //console.log(btn);
+    if (btn) {
+        const goToPage = parseInt(btn.dataset.goto,10);
+        SearchView.clearResult();// with added feature to clear buttons else all 3 will be displayed
+        SearchView.renderResults(state.search.results, goToPage);
+       // console.log(goToPage);
+    }  
+    
+    
+})
 
+
+/*
+Recipe controller
+*/
+
+const r = new Recipe(47746);
+r.getRecipe()
+console.log(r)
