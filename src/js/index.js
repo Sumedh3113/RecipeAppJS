@@ -3,7 +3,7 @@
 //https://www.food2fork.com/api/search
 import Search from './models/Search';
 import * as SearchView from './views/SearchView';
-import { elements } from './views/base';
+import { elements,renderLoader,clearLoader } from './views/base';
 
 
 const state ={}
@@ -21,10 +21,12 @@ const controlSearch = async () =>{
         /*we can call these functions from here as other computations are happening inside Search.js and below we are just fetching results from Search.js*/
         SearchView.clearInput();
         SearchView.clearResult();
+        renderLoader(elements.searchres);
         
         //wait for result
         await state.search.getResults();
         
+        clearLoader();
         //pass value to search view to display on screen
         SearchView.renderResults(state.search.results);
     }
